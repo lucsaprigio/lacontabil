@@ -6,5 +6,6 @@ export default defineConfig({
     plugins: [tsConfigPaths()],
     test: {
         globals: true,
+        silent: false
     },
 })

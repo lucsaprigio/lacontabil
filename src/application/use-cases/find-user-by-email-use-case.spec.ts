@@ -1,30 +1,30 @@
 import { InMemoryUsersRepository } from "test/repositories/in-memory-user-repository"
-import { FindUserByIdUseCase } from "./find-user-by-id-use-case";
 import { makeUser } from "test/factories/make-user";
 import { AppError } from "@/core/shared/errors/AppError";
+import { FindUserByEmailUseCase } from "./find-user-by-email-use-case";
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
-let sut: FindUserByIdUseCase
+let sut: FindUserByEmailUseCase
 
-describe('Find user by id', async () => {
+describe('Find user by email', async () => {
     beforeEach(() => {
         inMemoryUsersRepository = new InMemoryUsersRepository()
-        sut = new FindUserByIdUseCase(inMemoryUsersRepository)
+        sut = new FindUserByEmailUseCase(inMemoryUsersRepository)
     })
 
-    it('should be able to find user by id', async () => {
+    it('should be able to find user by email', async () => {
         const newUser = makeUser()
 
         inMemoryUsersRepository.create(newUser);
 
-        const { user } = await sut.execute({ id: newUser.id.toString() })
+        const { user } = await sut.execute({ email: newUser.email.toString() })
 
-        expect(user?.id).equals(newUser.id)
+        expect(user?.email).equals(newUser.email)
     })
 
-    it('should return null if user does not exist', async () => {
+    it('should be able to not found user', async () => {
         await expect(
-            sut.execute({ id: 'no-id' })
+            sut.execute({ email: 'wrong-mail' })
         ).rejects.toBeInstanceOf(AppError)
     })
 })

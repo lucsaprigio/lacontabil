@@ -1,27 +1,26 @@
 import { IUsersRepository } from "@/application/repositories/IUsersRepository";
 import { AppError } from "@/core/shared/errors/AppError";
-import { User } from "@/domain/lacontabil/entities/user";
 
-interface FindUserByIdUseCaseRequest {
+interface DeleteUserUseCaseRequest {
     id: string;
 }
 
-interface FindUserByIdUseCaseResponse {
-    user: User | null;
-}
-
-export class FindUserByIdUseCase {
+export class DeleteUserUseCase {
     constructor(private usersRepository: IUsersRepository) { }
 
-    async execute({ id }: FindUserByIdUseCaseRequest): Promise<Omit<FindUserByIdUseCaseResponse, 'password'>> {
+    async execute({ id }: DeleteUserUseCaseRequest) {
         const user = await this.usersRepository.findById(id);
 
         if (!user) {
             throw new AppError('User not found', 400)
         }
 
-        return {
-            user
+        if (id !== user.id.toString()) {
+            throw new AppError('Not allowed', 400)
         }
+
+        await this.usersRepository.delete(user)
+
+        return {}
     }
 }
