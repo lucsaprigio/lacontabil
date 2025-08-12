@@ -17,7 +17,7 @@ describe('Find user by id', async () => {
 
         inMemoryUsersRepository.create(newUser);
 
-        const { user } = await sut.execute({ id: newUser.id.toString() })
+        const { user } = await sut.execute({ id: newUser.userId.toString() })
 
         expect(user?.id).equals(newUser.id)
     })

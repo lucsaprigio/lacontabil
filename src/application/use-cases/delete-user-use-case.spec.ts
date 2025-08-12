@@ -25,7 +25,7 @@ describe('Delete user', async () => {
 
         await inMemoryUsersRepository.create(newUser)
 
-        await sut.execute({ id: newUser.id.toString() })
+        await sut.execute({ userId: newUser.userId.toString() })
 
         expect(inMemoryUsersRepository.items).toHaveLength(0)
     })
@@ -44,7 +44,7 @@ describe('Delete user', async () => {
 
         await expect(() => {
             return sut.execute({
-                id: 'user-2'
+                userId: 'user-2'
             })
         }).rejects.toBeInstanceOf(AppError)
     })

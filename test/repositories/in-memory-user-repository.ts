@@ -8,8 +8,8 @@ export class InMemoryUsersRepository implements IUsersRepository {
         this.items.push(user)
     }
 
-    async findById(id: string) {
-        const user = this.items.find((item) => item.id.toString() === id);
+    async findById(userId: string) {
+        const user = this.items.find((item) => item.userId.toString() === userId);
 
         if (!user) {
             return null
@@ -32,5 +32,11 @@ export class InMemoryUsersRepository implements IUsersRepository {
         const itemIndex = this.items.findIndex((item) => item.id === user.id)
 
         this.items.splice(itemIndex, 1)
+    }
+
+    async save(user: User) {
+        const itemIndex = this.items.findIndex((item) => item.id === user.id)
+
+        this.items[itemIndex] = user
     }
 }

@@ -14,6 +14,7 @@ export function makeUser(
 ) {
     // Partial -> Pega todas as props de uma Props, e torna como opcional
     const user = User.create({
+        userId: new UniqueEntityID(),
         cpf_cnpj: '123456789',
         email: 'johndoe@example.com',
         name: 'John Doe',
