@@ -1,6 +1,5 @@
 import { InMemoryUsersRepository } from "test/repositories/in-memory-user-repository"
 import { CreateUserUseCase } from "./create-user-use-case";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
 let sut: CreateUserUseCase
